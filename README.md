@@ -6,7 +6,7 @@ This project demonstrate threat detection and automated response utilizing **Act
 
 The logical diagram illustrates how communication and data flow are standardized across systems. The scenario simulates an adversary gaining unauthorized access to a domain-joined test machine. This triggers telemetry from the test machine to Splunk, which detects the unauthorized sucessful login and initiates two actions:
 
-1. Sends a alert notification to Slack, a secure communication platform.
+1.Sends an alert notification to Slack, a multi-purpose platform used for communication, threat detection, and incident response as part of this project’s workflow.
 
 2. Sends a webhook to Shuffle, which triggers an automated SOAR playbook in response to the unauthorized login attempt. The playbook notifies a Security Personnel, who decides to either disable the compromised account or take no action. If the account is disabled, Shuffle & the Domain Controller executes the action, and a confirmation message is sent to Slack.
 
