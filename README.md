@@ -36,10 +36,17 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 
 # Active Directory Configuration
 
-In the logical diagram, two VMs are being used, one for the Domain Controller and one as an User of the Domain. 
+For the scope of this project, majority of the Active Directory Setup and Configuration won't be documented. Reference image can be found in the github repo under **ADSSDR_AD_SETUP#.png**.
 
 1. travis-ADDC01 Machine will be the Domain Controller
+   
+![DCSetup](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP1.png)
+
 2. Test Machine will be a new user created under the Domain.
+
+![TestMachineSetup](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP4.png)
+
+
 
 
 
