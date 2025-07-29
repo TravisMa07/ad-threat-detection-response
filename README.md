@@ -24,7 +24,7 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 <br/>
 
 ![Ingress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_INGRESS_RULES.png)
-*Ingress firewall rules allowing all source IP to send data to 22(SSH), 3389(RDP), and ICMP.*
+*Ingress firewall rules allowing all source IP to send data to the respected ports.*
 <br/>
 *For an real enterprise network, **DO NOT ALLOW ALL SOURCE IP**. For this lab in particular, instead of using my public IP as the source IP, I allow all source IP as it's not a production environment and is not of importance to the scope of this lab.*
 
@@ -32,7 +32,7 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 <br/>
 
 ![Egress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_EGRESS_RULES.png)
-*Egress firewall rules allowing outbound ICMP packets to other nodes to test connectvity.*
+*Egress firewall rules allowing all outbound traffic to be sent.*
 
 # Active Directory Configuration
 
