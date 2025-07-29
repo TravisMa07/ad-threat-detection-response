@@ -33,3 +33,15 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 
 ![Egress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_EGRESS_RULES.png)
 *Egress firewall rules allowing outbound ICMP packets to other nodes to test connectvity.*
+
+# Active Directory Configuration
+
+In the logical diagram, two VMs are being used, one for the Domain Controller and one as an User of the Domain. 
+
+1. travis-ADDC01 Machine will be the Domain Controller
+2. Test Machine will be a new user created under the Domain.
+
+
+
+
+
