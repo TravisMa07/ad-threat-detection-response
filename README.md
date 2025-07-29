@@ -36,15 +36,14 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 
 # Active Directory Configuration
 
-For the scope of this project, majority of the Active Directory Setup and Configuration won't be documented. Reference image can be found in the github repo under **ADSSDR_AD_SETUP#.png**.
+For the scope of this project, majority of the Active Directory Setup and Configuration won't be documented. Reference image can be found in the github repo under **ADSSDR_AD_SETUP#.png** for Active Directory Configuration.
 
-1. travis-ADDC01 Machine will be the Domain Controller
-   
-![DCSetup](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP1.png)
+1. travis-ADDC01 Machine will be the Domain Controller.
 
-2. Test Machine will be a new user created under the Domain.
+2. Join the Test Machine into the new domain: travis.local. Test Machine will be login as a new user created under the Domain: Travis Ma (TMa).
 
-![TestMachineSetup](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP4.png)
+**If any issues arise during the Active Directory configuration and setup, ensure that the DNS server is properly configured, firewall ingress rules allow traffic on the appropriate ports, and Remote Desktop is enabled for new users (TMa). Additional troubleshooting solutions can be found on the Microsoft Forums.**
+
 
 
 
