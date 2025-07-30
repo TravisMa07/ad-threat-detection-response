@@ -83,7 +83,7 @@ Splunk Universal Forwader Agents is to be install on the Test Machine and the Do
 
  ![SplunkA1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA1.png)
 
-**2. Continue with the installation process and enter the machine PRIVATE IP to port 9997.**
+**2. Continue with the installation process and enter the Splunk Server Private IP to port 9997 as the Recieving Indexer.**
 
 ![SplunkA2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA2.png)
 
