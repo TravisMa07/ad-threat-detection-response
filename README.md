@@ -52,33 +52,60 @@ For the scope of this project, majority of the Active Directory Setup and Config
 
 # Splunk Installation & Configuration
 
-Splunk must be installed and configure on the Ubuntu Server where it will host Splunk and its Web Interface. Splunk Agents (Splunk Universal Forwarder) will be install on both virtual machines hosting Active Directory.
+Splunk must be installed and configure on the Ubuntu Server where it will host Splunk and its Web Interface. Splunk Agents (Splunk Universal Forwarder) will be install on both the Test Machine and the Domain Controller Machine allowing telemetry to be sent from the VMs to the Splunk Server.
 
 **1. Head over to Splunk website, create an account, then copy the wget link for Splunk.**
+
 ![Splunk1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK2.png)
 
 **2. Make to update and upgrade locally install packages (apt get update/upgrade). Then proceed to run the wget command to get splunk.deb downloaded on the local machine. After it's downloaded, install the packages.**
+
 ![Splunk2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK3.png)
 ![Splunk3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK4.png)
 
 **3. Start splunk and head over to the web interface via [Public IP Address]:8000**
+
 ![Splunk4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK5.png)
 ![Splunk5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK6.png)
 
 **4. Configure Splunk to recieve data ingestion via a netork port (9997) and creating an index to store that data.**
+
 ![Splunk6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK9.png)
 *This configuration enables Splunk to recieve data from external sources like the Universal Forwarders Agents on TCP port 9997.*
 
 ![Splunk7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK8.png)
 *travis-AD index stores incoming data in particular Active Directory logs/related data*
 
-# Splunk Agents Installation
-Splunk Universal Forwader Agents is to be install on the Test Machine and the Domain Controller VMs. Installation Process is the same on both machines.
+# Splunk Universal Forwarder Agents Installation
+Splunk Universal Forwader Agents is to be install on the Test Machine and the Domain Controller VMs. Installation Process is the same on both machines with the exception of changing values on the respected machines (Private IP, index, etc)
 
-1.
+**1. Head over to Splunk website and install Splunk Universal Forwarder.**
 
+ ![SplunkA1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA1.png)
 
+**2. Continue with the installation process and enter the machine PRIVATE IP to port 9997.**
 
+![SplunkA2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA2.png)
 
+**3. Head over to the Splunk Forwarder directory on the VM. Copy the index.conf file from ./etc/system/default and paste it into ./etc/system/local**
+
+![SplunkA3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA3.png)
+![SplunkA4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA4.png)
+
+**4. Open the index.conf file located in ./etc/system/local with NotePad and add the lines in the image below into the bottom of the file with the excpetion of changing index = "your personal index name"**
+
+![SplunkA5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA5.png)
+<br/>*Collect Windows Security Event Logs and forward them to the indexer where it will be stored in.*
+
+**5. Head over to Services.msc and locate SplunkForwarder. Open properties and select "Log on as: Local System Account". Apply changes and restart the service.**
+
+![SplunkA6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA5.5.png)
+![SplunkA7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA6.png)
+<br/>*Update property changes and index.conf configuration*
+
+**6. Head over to Splunk Web Interface, go to Apps: Search and Reporting, then query "index=...".**
+
+![SplunkA8](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA7.png)
+*This step offically confirm the connection of the telemetry links between the Test Machine and Domain Controller Machine to the Splunk Server.*
 
 
