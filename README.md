@@ -74,7 +74,7 @@ Splunk must be installed and configure on the Ubuntu Server where it will host S
 *This configuration enables Splunk to recieve data from external sources like the Universal Forwarders Agents on TCP port 9997.*
 
 ![Splunk7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK8.png)
-*travis-ad index stores incoming data*
+*travis-ad index stores incoming data.*
 
 # Splunk Universal Forwarder Agents Installation
 Splunk Universal Forwader Agents is to be install on the Test Machine and the Domain Controller VMs. Installation Process is the same on both machines.
