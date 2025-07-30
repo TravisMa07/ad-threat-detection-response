@@ -52,6 +52,9 @@ For the scope of this project, majority of the Active Directory Setup and Config
 
 # Splunk Installation & Configuration
 
+Splunk must be installed and configure on the Ubuntu Server where it will host Splunk and its Web Interface. Splunk Agents (Splunk Universal Forwarder) will be install on both virtual machines hosting Active Directory.
+
+
 
 
 
