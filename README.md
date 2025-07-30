@@ -34,15 +34,25 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 ![Egress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_EGRESS_RULES.png)
 *Egress firewall rules allowing all outbound traffic to be sent.*
 
-# Active Directory Configuration
+# Active Directory Installation & Configuration
 
 For the scope of this project, majority of the Active Directory Setup and Configuration won't be documented. Reference image can be found in the github repo under **ADSSDR_AD_SETUP#.png** for Active Directory Configuration.
 
-1. travis-ADDC01 Machine will be the Domain Controller.
+**1. travis-ADDC01 Machine will be the Domain Controller.**
 
-2. Join the Test Machine into the new domain: travis.local. Test Machine will be login as a new user created under the Domain: Travis Ma (TMa).
+![AD1](https://github.com/TravisMa07/active-directory-siem-soar-detection-response/blob/main/ADSSDR_AD_SETUP1.png)
+![AD2](https://github.com/TravisMa07/active-directory-siem-soar-detection-response/blob/main/ADSSDR_AD_SETUP2.png)
 
-**If any issues arise during the Active Directory configuration and setup, ensure that the DNS server is properly configured, firewall ingress rules allow traffic on the appropriate ports, and Remote Desktop is enabled for new users (TMa). Additional troubleshooting solutions can be found on the Microsoft Forums.**
+**2. Join the Test Machine into the new domain: travis.local. Test Machine will be login as a new user created under the Domain: Travis Ma (TMa).**
+   
+![AD3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP4.png)
+![AD4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP5.png)
+
+*If any issues arise during the Active Directory configuration and setup, ensure that the DNS server is properly configured, firewall ingress rules allow traffic on the appropriate ports, and Remote Desktop is enabled for new users (TMa). Additional troubleshooting solutions can be found on the Microsoft Forums.*
+
+# Splunk Installation & Configuration
+
+
 
 
 
