@@ -4,11 +4,11 @@ This project demonstrate threat detection and automated response utilizing **Act
 # Logical Diagram
 ![Logical Diagram](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/SIEM-SOAR%20Integration%20for%20Unauthorized%20Active%20Directory%20Logins.drawio.png)
 
-The logical diagram illustrates how communication and data flow are standardized across systems. The scenario simulates an adversary gaining unauthorized access to a domain-joined test machine. This triggers telemetry from the test machine to Splunk, which detects the unauthorized sucessful login and initiates two actions:
+The logical diagram illustrates how communication and data flow are standardized across systems. The scenario simulates an adversary gaining unauthorized access to a domain-joined test machine. This triggers telemetry from the test machine to Splunk, which detects the unauthorized sucessful login through RDP and initiates two actions:
 
 1. Sends an alert notification to Slack, a multi-purpose platform used for communication, threat detection, and incident response as part of this project’s workflow.
 
-2. Sends a webhook to Shuffle, which triggers an automated SOAR playbook in response to the unauthorized login attempt. The playbook notifies a Security Personnel, who decides to either disable the compromised account or take no action. If the account is disabled, Shuffle & the Domain Controller executes the action, and a confirmation message is sent to Slack.
+2. Sends a webhook to Shuffle, which triggers an automated SOAR playbook in response to the unauthorized login. The playbook notifies a Security Personnel, who decides to either disable the compromised account or take no action. If the account is disabled, Shuffle & the Domain Controller executes the action, and a confirmation message is sent to Slack.
 
 # Machine Configuration
 
@@ -107,5 +107,69 @@ Splunk Universal Forwader Agents is to be install on the Test Machine and the Do
 
 ![SplunkA8](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA7.png)
 *This confirm the connection of the telemetry links between the Test Machine and Domain Controller Machine to the Splunk Server showing real-time Windows Security Event Logs for the purpose of finding Sucessful Unauthorized Logins.*
+
+# Creating Alert for Sucessful Authentication
+A sucessful Login on an Windows Environment generate a Window Security Log: Event ID 4624. Under this security log, it can generate 9 different "logon types". Events related to RDP, Event 4624 can generate types of 7 & 10. To simulate an unauthorized RDP login, an alert should be created with a focus on suspicious Source Network Address Values.
+
+![Alert1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_ALERT1.png)
+![Alert2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_ALERT2.png)
+
+**1. Modify the query to:**
+<br/>
+"index=... EventCode=4624 (Logon_Type=7 OR Logon_Type=10) Source_Network_Address=* Source_Network_Address!="-" Source_Network_Address!=129."
+
+**What this Query/Alert do?"**
+This Splunk query is designed to detect potentially unauthorized RDP (Remote Desktop Protocol) login activity by examining successful Windows login events and filtering based on the source network address.
+<br/>
+Each component of the query performs a specific function:
+   - **"index..."** <br/>
+     Searches only for the designated index where Window Security Event Logs are stored.
+     
+   - **"EventCode=4624"** <br/>
+     A specific Window Security log Event that indicates a Sucessful User Logon.
+     
+   - **"(Logon_Type=7 OR Logon_Type=10)"** <br/>
+     Specifies the method of the logon attempts shown. Reference can be found in the chart above
+     
+   - "Source_Network_Address=*" <br/>
+     Indicate a value MUST exist under this field name. Prevent logs where the Source Network Address is missing or Undefined.
+     
+   - **"Source_Network_Address!="-""** <br/>
+     Filter NULL Source Network Address. Excludes events where the source address is the placeholder "-", which often appears when the address isn’t available.
+     
+   - **"Source_Network_Address!=129."** <br/>
+     FILTER OUT PUBLIC IP ADDRESS COMING FROM OUR TRUSTED MACHINE (specific to your configuration). Any number that isn't part of your public ip address for your environment can be consider unauthorize.
+      - *DiSCLAIMER: This doesn't involve other environment/circumstances such as Work at Home, Vacations, etc. As a result, the alert may generate false positives if legitimate users connect from outside the 129. IP range. Consider building an allowlist or adding additional filters if needed.*
+
+**2. Test the Query**
+<br/>
+Initiate a Remote Desktop Protocol (RDP) from the Adversary Virtual Machine into the Test Machine or the Domain Controller Machine. Since the Adversary VM operates outside the trusted public IP space (129.x.x.x), this action should generate the appropriate Window Event Log.
+
+**3. Create the Alert/Rules**
+
+With the Query inputted, hit **Save As, then Alert**.
+<br/>
+**Title the Alert** to indicate for Unauthorized Succesful Login (travislocal-UnauthorizedSucessful-Login-RDP). <br/>
+**Alert Type**: you can run in any specific interval. <br/>
+**Cron Schedule** allow the alert to run at **specific intervals during a time range for precise control over time execution** <br/>
+**Cron Expression:** "* * * * *" - This allow the Alert to run every minute for the time range (60 minute). <br/>
+**Trigger Actions:** Add action to "Add to Triggered Alerts". This allow the alert to be on the Triggered Alerts list.<br/>
+
+![Alert3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_ALERT3.png)
+
+**Top right of the Splunk Web Interface, Hit Activity then Triggered Alerts. This is where the Unauthorized Succesful Login Alert will be stored when triggered.**
+
+
+
+
+
+
+
+    
+   
+        
+
+
+
 
 
