@@ -54,7 +54,23 @@ For the scope of this project, majority of the Active Directory Setup and Config
 
 Splunk must be installed and configure on the Ubuntu Server where it will host Splunk and its Web Interface. Splunk Agents (Splunk Universal Forwarder) will be install on both virtual machines hosting Active Directory.
 
+**1. Head over to Splunk website, create an account, then copy the wget link for Splunk.**
+![Splunk1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK2.png)
 
+**2. Make to update and upgrade locally install packages (apt get update/upgrade). Then proceed to run the wget command to get splunk.deb downloaded on the local machine. After it's downloaded, install the packages.**
+![Splunk2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK3.png)
+![Splunk3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK4.png)
+
+**3. Start splunk and head over to the web interface via [Public IP Address]:8000**
+![Splunk4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK5.png)
+![Splunk5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK6.png)
+
+**4. Configure Splunk to recieve data ingestion via a netork port (9997) and creating an index to store that data.**
+![Splunk6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK9.png)
+*This configuration enables Splunk to recieve data from external sources like the Universal Forwarders Agents on TCP port 9997.*
+
+![Splunk7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK8.png)
+*travis-AD index stores incoming data in particular Active Directory logs/related data*
 
 
 
