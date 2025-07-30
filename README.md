@@ -72,8 +72,10 @@ Splunk must be installed and configure on the Ubuntu Server where it will host S
 ![Splunk7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK8.png)
 *travis-AD index stores incoming data in particular Active Directory logs/related data*
 
+# Splunk Agents Installation
+Splunk Universal Forwader Agents is to be install on the Test Machine and the Domain Controller VMs. Installation Process is the same on both machines.
 
-
+1.
 
 
 
