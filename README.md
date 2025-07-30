@@ -74,10 +74,10 @@ Splunk must be installed and configure on the Ubuntu Server where it will host S
 *This configuration enables Splunk to recieve data from external sources like the Universal Forwarders Agents on TCP port 9997.*
 
 ![Splunk7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK8.png)
-*travis-AD index stores incoming data in particular Active Directory logs/related data*
+*travis-ad index stores incoming data*
 
 # Splunk Universal Forwarder Agents Installation
-Splunk Universal Forwader Agents is to be install on the Test Machine and the Domain Controller VMs. Installation Process is the same on both machines with the exception of changing values on the respected machines (Private IP, index, etc)
+Splunk Universal Forwader Agents is to be install on the Test Machine and the Domain Controller VMs. Installation Process is the same on both machines.
 
 **1. Head over to Splunk website and install Splunk Universal Forwarder.**
 
@@ -106,6 +106,6 @@ Splunk Universal Forwader Agents is to be install on the Test Machine and the Do
 **6. Head over to Splunk Web Interface, go to Apps: Search and Reporting, then query "index=...".**
 
 ![SplunkA8](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA7.png)
-*This step offically confirm the connection of the telemetry links between the Test Machine and Domain Controller Machine to the Splunk Server.*
+*This confirm the connection of the telemetry links between the Test Machine and Domain Controller Machine to the Splunk Server showing real-time Windows Security Event Logs for the purpose of finding Sucessful Unauthorized Logins.*
 
 
