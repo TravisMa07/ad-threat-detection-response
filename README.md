@@ -201,7 +201,7 @@ After Setting up Slack and Shuffle, webhook, Slack Alerts, and Email Notificatio
 
 **1. "If NO - Do Nothing" Configuration**
 
-For this part of the Playbook, no configuration is needed to be done. The handling of the "If YES - Disable User Account" Configuration will configure this part of the playbook by itself.
+For this part of the Playbook, no configuration is needed to be done. The handling of the "If YES - Disable User Account" Configuration will configure this part of the playbook by itself. As with the Email notification, copying the link for false in the "Would you like to disable the user?" email, it will automatically **DO NOTHING**.
 
 **2. "If YES - Disable User Account" Configuration**
 
