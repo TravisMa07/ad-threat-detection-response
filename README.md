@@ -193,13 +193,17 @@ With the Webhook and Slack configurated and connected. Either rerun previous "Wo
 ![ShuffleE1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLEEMAIL1.png)
 *Changing the parameter under the Information tab will help organize the output of the automated email.*
 
-# Playbook Deployment
+# Playbook Configuration & Deployment
 
 After Setting up Slack and Shuffle, webhook, Slack Alerts, and Email Notification. The Email output ask to disable the user or not, triggering the playbook.
 
 ![Playbook1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOKLD.png)
 
-**1. "If YES - Disable User Account" Configuration**
+**1. "If NO - Do Nothing" Configuration**
+
+For this part of the Playbook, no configuration is needed to be done. The handling of the "If YES - Disable User Account" Configuration will configure this part of the playbook by itself.
+
+**2. "If YES - Disable User Account" Configuration**
 
 To disable an AD account, a connection to LDAP or some other directory protocol must be enable.
 
@@ -214,6 +218,51 @@ To disable an AD account, a connection to LDAP or some other directory protocol 
    - Use-SSL = True
 ![PB1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK2.png)
 ![PB2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK1.png)
+
+- On the Active Directory Configuration on Slack, **Change "Find Actions" to Disable user**. For the **"Samaccountname", enter the user created for the Test Machine OR use "$exec.result.user"**
+
+![PB3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK3.png) <br/>
+*To test if the account disable without any dependencies on Shuffle(slack, user input). Only connect the Webhook to Active Directory and then rerun the Workflow for Webhook.*
+
+After Active Directory disable the user, it should send a **Slack Notification stating "Account: [Account Name] has been disabled"**.
+- Create a new Slack App on Shuffle
+   - Rename it
+   - Update Text Option
+   - Update Channel (#alert on Slack)
+  
+![PB4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK4.png)
+![PB5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK5.png)
+![PB6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK6.png)
+
+**Troubleshooting Order of Operation for Disabling User**
+
+A primary issue with the current configuration of Shuffle is that Slack won't disable the User Account and it wont output an message saying a **Slack Notification saying "Account: [Account Name] has been disabled"** or it will output that message before the Disabling User Operation occurs. With the intended order of operation, this is an major misconfiguration of the workflow.
+
+**SOLUTION**
+- **Refresh Workflow on Shuffle.** This fix the issue of the User Account not disabling, **but it cause the Slack Notification to be outputted earlier then expected.**
+   - **Solution for Early Slack Notification:** Once Shuffle disable the User, Active Directory will then check the User Attribute, then if it's under the status of DISABLED, it will then update Slack with the Disable User Notification
+      - To represent this. Create a new Active Directory App to get User-Attributes.
+      - Create a "repeat back to me" (call it "Check AD User") App/Action with the call "$get-user-attributes.attributes.userAccountControl". Connect this to Slack
+      - Add a Condition for the connection between Check AD User and Slack.
+         - For the source: $get-user-attributes.attributes.userAccountControl
+         - contains
+         - For the Destination: "ACCOUNTDISABLED"
+
+![PBIS1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PBIS1.png)
+![PBIS2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PBIS2.png) <br/>
+*Refer to Online Sources on how to analyze the connection between the original "Active Directory 1" and the "Update-Notification" App. Understand why it's not sending in the proper order of operation and the solution will become clear.*
+
+
+**TESTING DISABLE USER ORDER OF OPERATION**
+- Start the Webhook (Enable Splunk Alert if needed on Splunk Web Interface)
+- Make sure the User Account is enable (TMa)
+- Trigger the Alert, it should send a Alert message to Slack and an Email to the inbox. 
+- In the email, it ask "Would you like to disable the user?"
+     - if this is TRUE click this: ...
+        - copy and paste the link on a web broswer. It should redirect to Shuffle asking "What do you want to do?". Hit "continue".
+        - The account will be disabled (TMa) and an automated message on Slack will be sent confirming the disabling of the Account: "Account TMa has been disabled."
+      
+# Conclusion
 
 
 
