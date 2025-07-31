@@ -159,7 +159,61 @@ With the Query inputted, hit **Save As, then Alert**.
 
 **Top right of the Splunk Web Interface, Hit Activity then Triggered Alerts. This is where the Unauthorized Succesful Login Alert will be stored when triggered.**
 
+# Slack & Shuffle Integration
+Slack and Shuffle Integration will cover all the connectivity in this portion of the Logical Diagram. Handling Shuffle and Slack Creation, Webhook Configuration, Slack Alert Configuration, Shuffle Email Configuration.
+![LDSS](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADDSDR_SLACK%26SHUFFLELD.png)
 
+**1. Create Account on shuffler.io, the SOAR Platform and create a New Workflow.**
+![Shuffle1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLE1.png)
+
+**2. Shuffle Webhook Configuration and Deploment**
+
+Create a **Webhook Trigger** and copy the **Webhook URI**. Head over to Splunk Web Interface and under Alert tab in Search & Reporting, edit the Alert created in the previous part, and **ADD ACTION - Webhook**. Then **Paste Webhook URI**.
+![Shuffle2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLE2.png)
+![Shuffle3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLE3.png)
+
+*Start the Shuffle Webhook(Splunk-Alert) and it should listen and capture Alerts. (can verify on Adversary Machine and check Details under "Explore Runs" tab on Shuffle.)*
+
+**3. Slack Alert Notification Configuration and Deployment**
+- Create an Account on Slack.com  then create an Workspace.
+- On Slack, Search for "Slack" App. On the Slack Configuration in Shuffle, hit "+ Authenticate slack"
+- Create a New Channel on Slack call "Alerts" where all the Alerts will be posted in. Under Slack app on Shuffle, Add a new Channel and link it to the Alerts channel on Slack.
+   - Head over to Slack, and grab the Channel ID under the Alert Channel then input it into the Channel Option on Shuffle.
+
+![Slack1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SLACK1.png)
+![Slack3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SLACK3.png)
+- Under Slack app on Shuffle, create a new "Text" Option, **Alert: $search_name \nTime: $exec.result_time \nUser: $exec.result.user \n Source IP: $exec.result.Source_Network_Address**
+  
+![Slack2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SLACK2.png)
+
+With the Webhook and Slack configurated and connected. Either rerun previous "Workflow Runs" or trigger a new Alert. This should output information about the Alert on Slack under the #Alerts channel. Outputting information about the Alert Name, Time, User, and Source IP. 
+
+**4. Shuffle Email Notification Configuration and Deployment**
+- Create a New **User Input Trigger** on Slack. Rename it, change the information text, and change the input option to Email. Then connect the User Input Trigger to Slack.
+![ShuffleE1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLEEMAIL1.png)
+*Changing the parameter under the Information tab will help organize the output of the automated email.*
+
+# Playbook Deployment
+
+After Setting up Slack and Shuffle, webhook, Slack Alerts, and Email Notification. The Email output ask to disable the user or not, triggering the playbook.
+
+![Playbook1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOKLD.png)
+
+**1. "If YES - Disable User Account" Configuration**
+
+To disable an AD account, a connection to LDAP or some other directory protocol must be enable.
+
+- Under Apps on Shuffle, create a new **Active Directory App** and connect it to **User Input**.
+- Authenticate Active Directory
+   - Enter the Domain Controller Public IP Address under Server.
+   - Port 389 for LDAP
+   - Enter the Domain Name (travis.local)
+   - Enter Administrator Login Name
+   - Enter Password for Administrator Account
+   - for **base-dn**. Head over to the DC Machine and on PowerShell, **run the command: get-addomain**. Copy the output for the **UserContainer** and paste it into base-dn. Refer to the image below.
+   - Use-SSL = True
+![PB1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK2.png)
+![PB2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK1.png)
 
 
 
