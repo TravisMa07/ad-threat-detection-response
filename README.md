@@ -234,7 +234,7 @@ After Active Directory disable the user, it should send a **Slack Notification s
 ![PB5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK5.png)
 ![PB6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK6.png)
 
-**Troubleshooting Order of Operation for Disabling User**
+## Troubleshooting Order of Operation for Disabling User
 
 A primary issue with the current configuration of Shuffle is that Slack won't disable the User Account and it wont output an message saying a **Slack Notification saying "Account: [Account Name] has been disabled"** or it will output that message before the Disabling User Operation occurs. With the intended order of operation, this is an major misconfiguration of the workflow.
 
