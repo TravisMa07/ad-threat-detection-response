@@ -261,6 +261,11 @@ A primary issue with the current configuration of Shuffle is that Slack won't di
      - if this is TRUE click this: ...
         - copy and paste the link on a web broswer. It should redirect to Shuffle asking "What do you want to do?". Hit "continue".
         - The account will be disabled (TMa) and an automated message on Slack will be sent confirming the disabling of the Account: "Account TMa has been disabled."
+
+**Shuffle Diagram**
+
+![SHUFFLEDIAGRAM](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLEDIAGRAM.png) <br/>
+*Complete Diagram of the Shuffle SOAR Workflow*
       
 # Conclusion
 
