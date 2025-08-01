@@ -268,8 +268,52 @@ A primary issue with the current configuration of Shuffle is that Slack won't di
 *Complete Diagram of the Shuffle SOAR Workflow*
       
 # Conclusion
+This project sucessfully demonstrates a workflow for handling unauthorized remote logins by integrating multiple enterprise security technologies into a cohesive threat detection and response system. The implementation showcases critical cybersecurity capabiltiies including:
 
+## Key Achievements
 
+**Threat Detection:** Sucessfully configured Splunk SIEM to monitor Windows Security Event Logs, creating detection rule/alert to accurately identify unauthorized RDP access attempts. Legitimate traffic was filtered to maintain a high degree of accuracy.
+
+**Automated Response Capabilitie:** Developed and deployed SOAR playbooks using Shuffle to reduce manual incident response processes. The playbook enabled automation of key response action, helping to streamline incident handling and minimizing response time and manual effort.
+
+**System Integration:** Sucessfully integrated various systems including SIEM, SOAR, communication platform, and directory services, demonstrating the ability to work within a complex enterprise security ecosystem.
+
+**Real-World Applicability:** The overall architecture resemble a real-world enterprise security environment, utilizing industry-standard tools and following established incident detection and response framework, policies, and procedures.
+
+## Technical Skills Demonstrated
+
+- **SIEM Integration:** Custom alert creation, log parsing, and threat detection using Splunk.
+
+- **SOAR Integration:** Workflow automation, multiple API integration using Shuffle, and conditional automated logic.
+
+- **Active Directory Integration:** Domain administration, user management, LDAP communication.
+
+- **Communication Platform Integration:** Slack for automated notifications and incident response. 
+
+- **Cloud Infrastructure:** Multi-VM deployment and network security configuration on Oracle Cloud.
+
+- **Security Workflow Analysis:** Threat simulation, incident response processes & procedures, security monitoring.
+
+## Industry Relevance
+
+This project addresses real-world cybersecurity challenges that organizations faces daily. Unauthorized access attempts represent a significant attack vector in enterprise enivornment. The automated response capabilities demonstrate and enhance key performance indicators in which many organization seek to improve its metric in:
+
+- Reduce mean time to detection(MTTD) and mean time to response (MTTR)
+- Minimize human error in incident response procedures
+- High scalability in security operations needed in enterprise environment
+- Improved Auditing Capabilties, supporting compliances and polciies
+
+## Future Enhancement
+
+This project demonstrate a foundational architecture with room for numerous opportunitites to expand, including but not limited to:
+
+- **Granular Access Control:** During the integration of the workflow between Active Directory, SIEM, and SOAR, further enhancements can be made by implementing more detailed access control mechanisms. For the scope and main objective of the project, access rights was very open and vulnerable. Implementing the principle of least privilege can ensure only authorized users and system can perform specific action, thereby reducing attack vectors and improving overall security posture
+
+- **Development of More Verbose Alerts and Playbooks:** The project have a very specific scope in only focusing on Sucessful RDP logins. The project consist of only one alert connected to a single playbook. To resemble more of an enterprise environment, the creation of a broader set of detection rules/alert and automated response playbooks can handle a wider variety of threats and improve incident detection & response capabilities.
+
+- **Hardening and Verbose Security Posture:** In the overall architecture, there was many insecure configuration especially the Active Directory and Oracle Cloud Infrastructure. For the sake of the project, configuration was intentionally left vulnerable to prioritize functionality and workflow validation. Future enhancement should focus on hardening these components by enforcing secvure baselines and following best practices.
+
+This project demonstrates not only the technical proficiency needed with enterprise security tools but also an understanding of operational workflow, security principles, threat detection & response, and the importance of automation in modern security operations. The skills and knowledge gained throughout this implementation provide a strong foundation for managing complex security environments and serve as an entry point for further specialization and advancement in the cybersecurity field.
 
 
 
