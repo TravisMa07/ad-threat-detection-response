@@ -1,5 +1,9 @@
 # Overview
-This project demonstrate threat detection and automated response utilizing **Active Directory** for user authentication, **Splunk(SIEM/IDS)** for event detection and logging, and **Shuffle with Slack(SOAR)** for automated alert and respone.
+This project demonstrates threat detection and automated response system designed for enterprise environment. It leverages Active Directory for user authentication, Splunk (SIEM/IDS) for real-time event monitoring and alerting, and Shuffle with Slack (SOAR) to orchestrate automated incident response workflow.
+
+The system simulates an adversary attempting unauthorized acccess via Remote Desktop Protocol (RDP) on a domainjoined test machine. Upon detection of a sucessful aunauthorized login, telemtry is forwarded to Splunk, which triggers alert notification and response actions.
+
+The end-to-end pipeline streamlines the detection, alerting, and mitigation process, enhancing security posture by reducing response time and human error.
 
 # Components & Objectives
 ### Active Directory
@@ -10,7 +14,7 @@ This project demonstrate threat detection and automated response utilizing **Act
 ### SIEM
 - Splunk Server Configuration/Installation
 - Alert Creation for Windows Security Event Logs
-- Add Alert Trigger
+- Event Monitoring with Alert Trigger
 
 ### SOAR
 - Shuffle Configuration/Installation
