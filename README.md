@@ -1,6 +1,28 @@
 # Overview
 This project demonstrate threat detection and automated response utilizing **Active Directory** for user authentication, **Splunk(SIEM/IDS)** for event detection and logging, and **Shuffle with Slack(SOAR)** for automated alert and respone.
 
+# Components & Objectives
+### Active Directory
+- Active Directory Configuration/Installation
+- Domain Controller & Domain User Machines
+- Remote Desktop Protocol (RDP) for Conducting Unauthorized Login Event
+
+### SIEM
+- Splunk Server Configuration/Installation
+- Alert Creation for Windows Security Event Logs
+- Add Alert Trigger
+
+### SOAR
+- Shuffle Configuration/Installation
+- Connect Webhook to SIEM Alert
+- Conduct Automated Playbook based on Alert trigger
+- Be able to Disable Unauthorized Users with Minimal Effort
+- Email Configuration and Slack Integration
+
+### Communication Platform
+- Slack Configuration/Integration
+- Automate messages outputting details of SIEM Alert and If the User Account is Disabled or Not
+  
 # Logical Diagram
 ![Logical Diagram](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/SIEM-SOAR%20Integration%20for%20Unauthorized%20Active%20Directory%20Logins.drawio.png)
 
