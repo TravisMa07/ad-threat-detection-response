@@ -28,7 +28,7 @@ The end-to-end pipeline streamlines the detection, alerting, and mitigation proc
 - Automate messages outputting details of SIEM Alert and If the User Account is Disabled or Not
   
 # Logical Diagram
-![Logical Diagram](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/SIEM-SOAR%20Integration%20for%20Unauthorized%20Active%20Directory%20Logins.drawio.png)
+![Logical Diagram](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/SIEM-SOAR%20Integration%20for%20Unauthorized%20Active%20Directory%20Logins.drawio.png)
 
 The logical diagram illustrates how communication and data flow are standardized across systems. The scenario simulates an adversary gaining unauthorized access to a domain-joined test machine. This triggers telemetry from the test machine to Splunk, which detects the unauthorized sucessful login through RDP and initiates two actions:
 
@@ -43,13 +43,13 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 <br/>
 <br/>
 
-![Subnet Connectvity and Machines on VPC](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_VM_INSTANCES.png)
+![Subnet Connectvity and Machines on VPC](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_VM_INSTANCES.png)
 *Three virtual machines including Splunk, a test machine, and a domain controller are connected to the same subnet in the same virtual private cloud (VPC).*
 
 <br/>
 <br/>
 
-![Ingress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_INGRESS_RULES.png)
+![Ingress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_INGRESS_RULES.png)
 *Ingress firewall rules allowing all source IP to send data to the respected ports.*
 <br/>
 *For an real enterprise network, **DO NOT ALLOW ALL SOURCE IP**. For this lab in particular, instead of using my public IP as the source IP, I allow all source IP as it's not a production environment and is not of importance to the scope of this lab.*
@@ -57,7 +57,7 @@ The project consist of 4 virtual machines, 3 being on the cloud (Oracle Cloud Pr
 <br/>
 <br/>
 
-![Egress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_EGRESS_RULES.png)
+![Egress Rules](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_EGRESS_RULES.png)
 *Egress firewall rules allowing all outbound traffic to be sent.*
 
 # Active Directory Installation & Configuration
@@ -66,13 +66,13 @@ For the scope of this project, majority of the Active Directory Setup and Config
 
 **1. travis-ADDC01 Machine will be the Domain Controller.**
 
-![AD1](https://github.com/TravisMa07/active-directory-siem-soar-detection-response/blob/main/ADSSDR_AD_SETUP1.png)
-![AD2](https://github.com/TravisMa07/active-directory-siem-soar-detection-response/blob/main/ADSSDR_AD_SETUP2.png)
+![AD1](https://github.com/TravisMa07/active-directory-siem-soar-detection-response/blob/main/Walkthrough-Screenshots/ADSSDR_AD_SETUP1.png)
+![AD2](https://github.com/TravisMa07/active-directory-siem-soar-detection-response/blob/main/Walkthrough-Screenshots/ADSSDR_AD_SETUP2.png)
 
 **2. Join the Test Machine into the new domain: travis.local. Test Machine will be login as a new user created under the Domain: Travis Ma (TMa).**
    
-![AD3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP4.png)
-![AD4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_AD_SETUP5.png)
+![AD3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_AD_SETUP4.png)
+![AD4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_AD_SETUP5.png)
 
 *If any issues arise during the Active Directory configuration and setup, ensure that the DNS server is properly configured, firewall ingress rules allow traffic on the appropriate ports, and Remote Desktop is enabled for new users (TMa). Additional troubleshooting solutions can be found on the Microsoft Forums.*
 
@@ -82,24 +82,24 @@ Splunk must be installed and configure on the Ubuntu Server where it will host S
 
 **1. Head over to Splunk website, create an account, then copy the wget link for Splunk.**
 
-![Splunk1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK2.png)
+![Splunk1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNK2.png)
 
 **2. Make to update and upgrade locally install packages (apt get update/upgrade). Then proceed to run the wget command to get splunk.deb downloaded on the local machine. After it's downloaded, install the packages.**
 
-![Splunk2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK3.png)
-![Splunk3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK4.png)
+![Splunk2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNK3.png)
+![Splunk3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNK4.png)
 
 **3. Start splunk and head over to the web interface via [Public IP Address]:8000**
 
-![Splunk4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK5.png)
-![Splunk5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK6.png)
+![Splunk4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNK5.png)
+![Splunk5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNK6.png)
 
 **4. Configure Splunk to recieve data ingestion via a netork port (9997) and creating an index to store that data.**
 
-![Splunk6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK9.png)
+![Splunk6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNK9.png)
 *This configuration enables Splunk to recieve data from external sources like the Universal Forwarders Agents on TCP port 9997.*
 
-![Splunk7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNK8.png)
+![Splunk7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNK8.png)
 *travis-ad index stores incoming data.*
 
 # Splunk Universal Forwarder Agents Installation
@@ -107,38 +107,38 @@ Splunk Universal Forwader Agents is to be install on the Test Machine and the Do
 
 **1. Head over to Splunk website and install Splunk Universal Forwarder.**
 
- ![SplunkA1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA1.png)
+ ![SplunkA1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA1.png)
 
 **2. Continue with the installation process and enter the Splunk Server Private IP to port 9997 as the Recieving Indexer.**
 
-![SplunkA2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA2.png)
+![SplunkA2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA2.png)
 
 **3. Head over to the Splunk Forwarder directory on the VM. Copy the index.conf file from ./etc/system/default and paste it into ./etc/system/local**
 
-![SplunkA3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA3.png)
-![SplunkA4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA4.png)
+![SplunkA3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA3.png)
+![SplunkA4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA4.png)
 
 **4. Open the index.conf file located in ./etc/system/local with NotePad and add the lines in the image below into the bottom of the file with the excpetion of changing index = "your personal index name"**
 
-![SplunkA5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA5.png)
+![SplunkA5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA5.png)
 <br/>*Collect Windows Security Event Logs and forward them to the indexer where it will be stored in.*
 
 **5. Head over to Services.msc and locate SplunkForwarder. Open properties and select "Log on as: Local System Account". Apply changes and restart the service.**
 
-![SplunkA6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA5.5.png)
-![SplunkA7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA6.png)
+![SplunkA6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA5.5.png)
+![SplunkA7](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA6.png)
 <br/>*Update property changes and index.conf configuration*
 
 **6. Head over to Splunk Web Interface, go to Apps: Search and Reporting, then query "index=...".**
 
-![SplunkA8](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SPLUNKA7.png)
+![SplunkA8](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SPLUNKA7.png)
 *This confirm the connection of the telemetry links between the Test Machine and Domain Controller Machine to the Splunk Server showing real-time Windows Security Event Logs for the purpose of finding Sucessful Unauthorized Logins.*
 
 # Creating Alert for Sucessful Authentication
 A sucessful Login on an Windows Environment generate a Window Security Log: Event ID 4624. Under this security log, it can generate 9 different "logon types". Events related to RDP, Event 4624 can generate types of 7 & 10. To simulate an unauthorized RDP login, an alert should be created with a focus on suspicious Source Network Address Values.
 
-![Alert1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_ALERT1.png)
-![Alert2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_ALERT2.png)
+![Alert1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_ALERT1.png)
+![Alert2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_ALERT2.png)
 
 **1. Modify the query to:**
 <br/>
@@ -181,22 +181,22 @@ With the Query inputted, hit **Save As, then Alert**.
 **Cron Expression:** "* * * * *" - This allow the Alert to run every minute for the time range (60 minute). <br/>
 **Trigger Actions:** Add action to "Add to Triggered Alerts". This allow the alert to be on the Triggered Alerts list.<br/>
 
-![Alert3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_ALERT3.png)
+![Alert3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_ALERT3.png)
 
 **Top right of the Splunk Web Interface, Hit Activity then Triggered Alerts. This is where the Unauthorized Succesful Login Alert will be stored when triggered.**
 
 # Slack & Shuffle Integration
 Slack and Shuffle Integration will cover all the connectivity in this portion of the Logical Diagram. Handling Shuffle and Slack Creation, Webhook Configuration, Slack Alert Configuration, Shuffle Email Configuration.
-![LDSS](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADDSDR_SLACK%26SHUFFLELD.png)
+![LDSS](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADDSDR_SLACK%26SHUFFLELD.png)
 
 **1. Create Account on shuffler.io, the SOAR Platform and create a New Workflow.**
-![Shuffle1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLE1.png)
+![Shuffle1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SHUFFLE1.png)
 
 **2. Shuffle Webhook Configuration and Deploment**
 
 Create a **Webhook Trigger** and copy the **Webhook URI**. Head over to Splunk Web Interface and under Alert tab in Search & Reporting, edit the Alert created in the previous part, and **ADD ACTION - Webhook**. Then **Paste Webhook URI**.
-![Shuffle2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLE2.png)
-![Shuffle3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLE3.png)
+![Shuffle2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SHUFFLE2.png)
+![Shuffle3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SHUFFLE3.png)
 
 *Start the Shuffle Webhook(Splunk-Alert) and it should listen and capture Alerts. (can verify on Adversary Machine and check Details under "Explore Runs" tab on Shuffle.)*
 
@@ -206,24 +206,24 @@ Create a **Webhook Trigger** and copy the **Webhook URI**. Head over to Splunk W
 - Create a New Channel on Slack call "Alerts" where all the Alerts will be posted in. Under Slack app on Shuffle, Add a new Channel and link it to the Alerts channel on Slack.
    - Head over to Slack, and grab the Channel ID under the Alert Channel then input it into the Channel Option on Shuffle.
 
-![Slack1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SLACK1.png)
-![Slack3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SLACK3.png)
+![Slack1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SLACK1.png)
+![Slack3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SLACK3.png)
 - Under Slack app on Shuffle, create a new "Text" Option, **Alert: $search_name \nTime: $exec.result_time \nUser: $exec.result.user \n Source IP: $exec.result.Source_Network_Address**
   
-![Slack2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SLACK2.png)
+![Slack2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SLACK2.png)
 
 With the Webhook and Slack configurated and connected. Either rerun previous "Workflow Runs" or trigger a new Alert. This should output information about the Alert on Slack under the #Alerts channel. Outputting information about the Alert Name, Time, User, and Source IP. 
 
 **4. Shuffle Email Notification Configuration and Deployment**
 - Create a New **User Input Trigger** on Slack. Rename it, change the information text, and change the input option to Email. Then connect the User Input Trigger to Slack.
-![ShuffleE1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLEEMAIL1.png)
+![ShuffleE1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SHUFFLEEMAIL1.png)
 *Changing the parameter under the Information tab will help organize the output of the automated email.*
 
 # Playbook Configuration & Deployment
 
 After Setting up Slack and Shuffle, webhook, Slack Alerts, and Email Notification. The Email output ask to disable the user or not, triggering the playbook.
 
-![Playbook1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOKLD.png)
+![Playbook1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PLAYBOOKLD.png)
 
 **1. "If NO - Do Nothing" Configuration**
 
@@ -242,12 +242,12 @@ To disable an AD account, a connection to LDAP or some other directory protocol 
    - Enter Password for Administrator Account
    - for **base-dn**. Head over to the DC Machine and on PowerShell, **run the command: get-addomain**. Copy the output for the **UserContainer** and paste it into base-dn. Refer to the image below.
    - Use-SSL = True
-![PB1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK2.png)
-![PB2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK1.png)
+![PB1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PLAYBOOK2.png)
+![PB2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PLAYBOOK1.png)
 
 - On the Active Directory Configuration on Slack, **Change "Find Actions" to Disable user**. For the **"Samaccountname", enter the user created for the Test Machine OR use "$exec.result.user"**
 
-![PB3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK3.png) <br/>
+![PB3](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PLAYBOOK3.png) <br/>
 *To test if the account disable without any dependencies on Shuffle(slack, user input). Only connect the Webhook to Active Directory and then rerun the Workflow for Webhook.*
 
 After Active Directory disable the user, it should send a **Slack Notification stating "Account: [Account Name] has been disabled"**.
@@ -256,9 +256,9 @@ After Active Directory disable the user, it should send a **Slack Notification s
    - Update Text Option
    - Update Channel (#alert on Slack)
   
-![PB4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK4.png)
-![PB5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK5.png)
-![PB6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PLAYBOOK6.png)
+![PB4](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PLAYBOOK4.png)
+![PB5](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PLAYBOOK5.png)
+![PB6](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PLAYBOOK6.png)
 
 ## Troubleshooting Order of Operation for Disabling User
 
@@ -274,8 +274,8 @@ A primary issue with the current configuration of Shuffle is that Slack won't di
          - contains
          - For the Destination: "ACCOUNTDISABLED"
 
-![PBIS1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PBIS1.png)
-![PBIS2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_PBIS2.png) <br/>
+![PBIS1](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PBIS1.png)
+![PBIS2](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_PBIS2.png) <br/>
 *Refer to Online Sources on how to analyze the connection between the original "Active Directory 1" and the "Update-Notification" App. Understand why it's not sending in the proper order of operation and the solution will become clear.*
 
 
@@ -290,7 +290,7 @@ A primary issue with the current configuration of Shuffle is that Slack won't di
 
 **Shuffle Diagram**
 
-![SHUFFLEDIAGRAM](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/ADSSDR_SHUFFLEDIAGRAM.png) <br/>
+![SHUFFLEDIAGRAM](https://raw.githubusercontent.com/TravisMa07/active-directory-siem-soar-detection-response/refs/heads/main/Walkthrough-Screenshots/ADSSDR_SHUFFLEDIAGRAM.png) <br/>
 *Complete Diagram of the Shuffle SOAR Workflow*
       
 # Conclusion
